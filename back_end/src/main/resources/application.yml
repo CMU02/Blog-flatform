@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: back_end
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog_db?serverTimezone=Asia/Seoul
+    username: root
+    password: Dnfltkfkd0306
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
