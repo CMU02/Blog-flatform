@@ -1,4 +1,7 @@
 package blog.flatform.message;
 
-public record SuccessfulMessage(String successfulMessage) {
+import org.springframework.http.HttpStatus;
+
+public record SuccessfulMessage(
+        HttpStatus status, String successfulMessage) {
 }

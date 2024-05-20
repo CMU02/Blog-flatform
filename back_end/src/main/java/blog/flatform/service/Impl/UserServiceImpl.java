@@ -1,7 +1,6 @@
 package blog.flatform.service.Impl;
 
-import blog.flatform.dto.SignInDto;
-import blog.flatform.dto.SignUpDto;
+import blog.flatform.dto.loginDto.SignUpDto;
 import blog.flatform.entity.Role;
 import blog.flatform.entity.User;
 import blog.flatform.repository.UserRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @Transactional(readOnly = true)

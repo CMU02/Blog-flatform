@@ -1,4 +1,7 @@
 package blog.flatform.message;
 
-public record ErrorMessage(String errorMessage) {
+import org.springframework.http.HttpStatus;
+
+public record ErrorMessage(
+        HttpStatus status, String errorMessage) {
 }

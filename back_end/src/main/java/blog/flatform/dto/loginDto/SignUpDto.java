@@ -1,7 +1,5 @@
-package blog.flatform.dto;
+package blog.flatform.dto.loginDto;
 
-import blog.flatform.entity.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

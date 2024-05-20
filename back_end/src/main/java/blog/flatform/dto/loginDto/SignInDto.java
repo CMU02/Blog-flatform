@@ -1,4 +1,4 @@
-package blog.flatform.dto;
+package blog.flatform.dto.loginDto;
 
 import lombok.Getter;
 import lombok.Setter;
