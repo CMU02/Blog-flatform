@@ -10,10 +10,12 @@ import blog.flatform.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -38,10 +40,12 @@ public class UserController {
                     .body(new ErrorMessage(HttpStatus.UNAUTHORIZED,"아이디 또는 비밀번호가 맞지 않습니다."));
         }
 
+        String[] sessionData = {loginUser.getName(), loginUser.getEmail()};
+
         // 세션이 있으면 세션 반환, 없을 시 세션 신규 생성
         HttpSession session = request.getSession();
         // 세션에 로그인 회원 아이디 보관
-        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
+        session.setAttribute(SessionConst.LOGIN_USER, sessionData);
         session.setMaxInactiveInterval(1800); // 1800초 -> 30분
 
         return ResponseEntity.ok(new SuccessfulMessage(HttpStatus.OK,"로그인 성공"));

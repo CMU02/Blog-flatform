@@ -5,17 +5,22 @@ import blog.flatform.dto.postDto.updatePostDto;
 import blog.flatform.entity.Post;
 import blog.flatform.repository.PostRepository;
 import blog.flatform.service.PostService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
+
     private final PostRepository postRepository;
+    private final EntityManager em;
 
     @Override
     public List<Post> getAllPosts() {
@@ -24,7 +29,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getPostById(Long id) {
-        return postRepository.findById(id).orElse(null);
+        return postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 글이 없습니다 ID : " + id)
+        );
     }
 
     @Override
@@ -37,31 +44,30 @@ public class PostServiceImpl implements PostService {
                 .category(savePostDto.getCategory())
                 .build();
 
-        return postRepository.save(savePost);
+        Post save = postRepository.save(savePost);
+
+        return save;
     }
 
     @Override
     @Transactional
-    public Post updatePost(updatePostDto updatePostDto) {
-        Post findPost = postRepository.findById(updatePostDto.getId()).orElseThrow(
-                () -> new IllegalArgumentException("해당하는 아이디가 없습니다 ID : " + updatePostDto.getId())
+    public void  updatePost(Long id, updatePostDto updatePostDto) {
+        Post findPost = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 글이 없습니다 ID : " + id));
+
+        // 변경 감지
+        findPost.updatePost(
+                updatePostDto.getTitle(),
+                updatePostDto.getContent(),
+                updatePostDto.getCategory()
         );
-
-        findPost.builder()
-                .title(updatePostDto.getTitle())
-                .content(updatePostDto.getContent())
-                .user(updatePostDto.getUser())
-                .category(updatePostDto.getCategory() != null ? updatePostDto.getCategory() : null)
-                .build();
-
-        return postRepository.save(findPost);
     }
 
     @Override
     @Transactional
     public void deletePost(Long id) {
         Post findPost = postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당하는 글은 없습니다 PostID : " + id)
+                () -> new IllegalArgumentException("해당하는 글이 없습니다 PostID : " + id)
         );
 
         postRepository.delete(findPost);

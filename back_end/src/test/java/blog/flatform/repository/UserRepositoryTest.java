@@ -56,6 +56,6 @@ class UserRepositoryTest {
 
         List<User> userList = userRepository.findAll();
 
-        assertThat(userList).hasSize(2);
+        assertThat(userList).hasSize(4); // Config/InitDB.class 테스트 계정으로 인한 크기 4
     }
 }

@@ -1,7 +1,9 @@
 package blog.flatform.config;
 
+import blog.flatform.entity.Category;
 import blog.flatform.entity.Role;
 import blog.flatform.entity.User;
+import blog.flatform.repository.CategoryRepository;
 import blog.flatform.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InitDB {
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     @PostConstruct
     public void init() {
@@ -29,5 +32,11 @@ public class InitDB {
 
         userRepository.save(tester);
         userRepository.save(admin);
+
+        Category testCategory = Category.builder()
+                .name("Spring Boot")
+                .build();
+
+        categoryRepository.save(testCategory);
     }
 }

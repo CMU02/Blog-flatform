@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/blog_db?serverTimezone=Asia/Seoul
     username: root
-    password: qwer1234
+    password: Dnfltkfkd0306
 
   jpa:
     show-sql: true

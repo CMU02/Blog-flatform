@@ -1,5 +1,7 @@
 package blog.flatform.dto.postDto;
 
+import blog.flatform.dto.categoryDto.CategoryItemDto;
+import blog.flatform.dto.loginDto.UserDto;
 import blog.flatform.entity.Category;
 import blog.flatform.entity.Post;
 import blog.flatform.entity.User;
