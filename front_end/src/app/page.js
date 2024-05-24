@@ -1,7 +1,26 @@
-export default function Home() {
+"use client";
+import React, { useState } from "react";
+import Sidebar from "@/Sidebar/Sidebar";
+import Nav from "@/Navigation/Nav";
+import "./page.css";
+import Component1 from "@/components/page1/Component";
+
+
+function Home() {
+  const [isNavVisible, setIsNavVisible] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsNavVisible(!isNavVisible);
+  };
+
   return (
     <div>
-      <h1>Hello Blog-Flatform Service</h1>
+      <Sidebar toggleNavbar={toggleNavbar} />
+      {isNavVisible && <Nav />}
+      <Component1 />
+
     </div>
   );
 }
+
+export default Home;
