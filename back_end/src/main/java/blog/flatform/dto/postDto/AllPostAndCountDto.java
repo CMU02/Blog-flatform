@@ -5,11 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AllPostDto<T> {
+public class AllPostAndCountDto<T> {
     private int count;
     private T postData;
 
-    public AllPostDto(int count, T postData) {
+    public AllPostAndCountDto(int count, T postData) {
         this.count = count;
         this.postData = postData;
     }

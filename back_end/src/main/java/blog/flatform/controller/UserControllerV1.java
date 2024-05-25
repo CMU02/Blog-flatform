@@ -1,6 +1,7 @@
 package blog.flatform.controller;
 
 import blog.flatform.config.SessionConst;
+import blog.flatform.dto.loginDto.SessionUserDto;
 import blog.flatform.dto.loginDto.SignInDto;
 import blog.flatform.dto.loginDto.SignUpDto;
 import blog.flatform.entity.User;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class UserController {
+public class UserControllerV1 {
     private final UserService userService;
 
     // 회원 가입
@@ -33,15 +34,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody SignInDto signInDto, HttpServletRequest request) {
         User loginUser = userService.login(signInDto.getEmail(), signInDto.getPassword());
-
         if (loginUser == null) {
             return ResponseEntity.
                     status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorMessage(HttpStatus.UNAUTHORIZED,"아이디 또는 비밀번호가 맞지 않습니다."));
         }
 
-        String[] sessionData = {loginUser.getName(), loginUser.getEmail()};
-
+        SessionUserDto sessionData = new SessionUserDto(loginUser.getName(), loginUser.getEmail());
         // 세션이 있으면 세션 반환, 없을 시 세션 신규 생성
         HttpSession session = request.getSession();
         // 세션에 로그인 회원 아이디 보관

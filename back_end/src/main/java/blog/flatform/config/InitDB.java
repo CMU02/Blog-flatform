@@ -34,7 +34,7 @@ public class InitDB {
         userRepository.save(admin);
 
         Category testCategory = Category.builder()
-                .name("Spring Boot")
+                .name("SpringBoot")
                 .build();
 
         categoryRepository.save(testCategory);
