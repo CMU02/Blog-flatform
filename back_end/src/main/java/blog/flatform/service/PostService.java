@@ -5,6 +5,8 @@ import blog.flatform.dto.postDto.updatePostDto;
 import blog.flatform.entity.Category;
 import blog.flatform.entity.Post;
 import blog.flatform.entity.User;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

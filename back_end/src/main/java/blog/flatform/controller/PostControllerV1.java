@@ -10,12 +10,14 @@ import blog.flatform.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/post")
 @RequiredArgsConstructor
@@ -43,10 +45,13 @@ public class PostControllerV1 {
         if (sessionUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorMessage(HttpStatus.UNAUTHORIZED, "로그인이 필요한 기능입니다."));
-        }
-        if (sessionUser.getUserEmail() != savePostDto.getUser().getEmail()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new ErrorMessage(HttpStatus.FORBIDDEN, "잘못된 유저 정보입니다."));
+        } else {
+            String email = savePostDto.getUser().getEmail();
+            String name = savePostDto.getUser().getName();
+            if (!sessionUser.getUserEmail().equals(email) || !sessionUser.getUsername().equals(name)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(new ErrorMessage(HttpStatus.FORBIDDEN, "잘못된 유저 정보입니다."));
+            }
         }
 
         postService.savePost(savePostDto);
@@ -60,6 +65,13 @@ public class PostControllerV1 {
         if (sessionUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorMessage(HttpStatus.UNAUTHORIZED, "로그인이 필요한 기능입니다."));
+        } else {
+            String email = updatePostDto.getUser().getEmail();
+            String name = updatePostDto.getUser().getName();
+            if (!sessionUser.getUserEmail().equals(email) || !sessionUser.getUsername().equals(name)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(new ErrorMessage(HttpStatus.FORBIDDEN, "잘못된 유저 정보입니다."));
+            }
         }
 
         postService.updatePost(id ,updatePostDto);

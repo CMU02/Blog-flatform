@@ -40,7 +40,7 @@ public class UserControllerV1 {
                     .body(new ErrorMessage(HttpStatus.UNAUTHORIZED,"아이디 또는 비밀번호가 맞지 않습니다."));
         }
 
-        SessionUserDto sessionData = new SessionUserDto(loginUser.getName(), loginUser.getEmail());
+        SessionUserDto sessionData = new SessionUserDto(loginUser.getId(), loginUser.getName(), loginUser.getEmail());
         // 세션이 있으면 세션 반환, 없을 시 세션 신규 생성
         HttpSession session = request.getSession();
         // 세션에 로그인 회원 아이디 보관

@@ -8,10 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SessionUserDto {
+    private Long userIndex;
     private String username;
     private String userEmail;
 
-    public SessionUserDto(String username, String userEmail) {
+    public SessionUserDto(Long userIndex, String username, String userEmail) {
+        this.userIndex = userIndex;
         this.username = username;
         this.userEmail = userEmail;
     }

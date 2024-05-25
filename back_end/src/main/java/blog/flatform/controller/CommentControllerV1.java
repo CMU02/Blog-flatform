@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/comment")
@@ -41,19 +40,22 @@ public class CommentControllerV1 {
         if (sessionUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorMessage(HttpStatus.UNAUTHORIZED, "로그인이 필요한 기능입니다."));
-        }
-        if (sessionUser.getUserEmail() != commentRequestDto.getUser().getEmail()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new ErrorMessage(HttpStatus.FORBIDDEN, "잘못된 유저 정보입니다."));
+        } else {
+            String email = commentRequestDto.getUser().getEmail();
+            String name = commentRequestDto.getUser().getName();
+            if (!sessionUser.getUserEmail().equals(email) || !sessionUser.getUsername().equals(name)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(new ErrorMessage(HttpStatus.FORBIDDEN, "잘못된 유저 정보입니다."));
+            }
         }
 
         CommentResponseDto responseComment = commentService.createComment(commentRequestDto);
         return ResponseEntity.ok(responseComment);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateComment(@RequestBody CommentUpdateRequestDto dto) {
-        commentService.updateComment(dto);
+    @PutMapping("/{id}/update")
+    public ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody CommentUpdateRequestDto dto) {
+        commentService.updateComment(id ,dto);
         return ResponseEntity.ok(new SuccessfulMessage(HttpStatus.OK, "성공적으로 수정되었습니다."));
     }
 

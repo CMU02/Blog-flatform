@@ -1,11 +1,18 @@
 package blog.flatform.service.Impl;
 
+import blog.flatform.config.SessionConst;
+import blog.flatform.dto.loginDto.SessionUserDto;
 import blog.flatform.dto.loginDto.SignUpDto;
+import blog.flatform.dto.postDto.updatePostDto;
 import blog.flatform.entity.Role;
 import blog.flatform.entity.User;
+import blog.flatform.message.ErrorMessage;
 import blog.flatform.repository.UserRepository;
 import blog.flatform.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

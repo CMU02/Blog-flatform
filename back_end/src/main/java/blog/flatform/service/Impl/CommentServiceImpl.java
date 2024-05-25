@@ -3,7 +3,6 @@ package blog.flatform.service.Impl;
 import blog.flatform.dto.commentDto.CommentRequestDto;
 import blog.flatform.dto.commentDto.CommentResponseDto;
 import blog.flatform.dto.commentDto.CommentUpdateRequestDto;
-import blog.flatform.dto.loginDto.SessionUserDto;
 import blog.flatform.entity.Comment;
 import blog.flatform.repository.CommentRepository;
 import blog.flatform.repository.PostRepository;
@@ -46,12 +45,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void updateComment(CommentUpdateRequestDto commentUpdateRequestDto) {
-        // 해당 게시글 존재 여부
-        postRepository.findById(commentUpdateRequestDto.getId())
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+    public void updateComment(Long id, CommentUpdateRequestDto commentUpdateRequestDto) {
         // 해당 댓글 존재 여부
-        Comment findComment = commentRepository.findById(commentUpdateRequestDto.getPostId())
+        Comment findComment = commentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
 
         // 변경 감지

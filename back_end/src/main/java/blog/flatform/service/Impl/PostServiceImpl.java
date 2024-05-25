@@ -2,9 +2,7 @@ package blog.flatform.service.Impl;
 
 import blog.flatform.dto.postDto.savePostDto;
 import blog.flatform.dto.postDto.updatePostDto;
-import blog.flatform.entity.Category;
 import blog.flatform.entity.Post;
-import blog.flatform.entity.User;
 import blog.flatform.repository.PostRepository;
 import blog.flatform.service.PostService;
 import jakarta.persistence.EntityManager;
@@ -45,9 +43,7 @@ public class PostServiceImpl implements PostService {
                 .user(savePostDto.getUser())
                 .category(savePostDto.getCategory())
                 .build();
-
-        Post save = postRepository.save(savePost);
-        return save;
+        return postRepository.save(savePost);
     }
 
     @Override
@@ -70,7 +66,6 @@ public class PostServiceImpl implements PostService {
         Post findPost = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 글이 없습니다 PostID : " + id)
         );
-
         postRepository.delete(findPost);
     }
 }

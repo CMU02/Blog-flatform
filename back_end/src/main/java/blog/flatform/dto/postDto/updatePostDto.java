@@ -11,5 +11,6 @@ import lombok.Setter;
 public class updatePostDto {
     private String title;
     private String content;
+    private User user;
     private Category category;
 }
