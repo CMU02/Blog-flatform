@@ -1,6 +1,5 @@
 package blog.flatform.dto.commentDto;
 
-import blog.flatform.dto.loginDto.SessionUserDto;
 import blog.flatform.entity.Comment;
 import blog.flatform.entity.Post;
 import blog.flatform.entity.User;
